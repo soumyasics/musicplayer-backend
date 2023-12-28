@@ -63,4 +63,4 @@ const ListenerSchema=mongoose.Schema({
     }
 
 })
-module.exports=mongoose.model('Listener',ListenerSchema)
+module.exports=mongoose.model('listeners',ListenerSchema)

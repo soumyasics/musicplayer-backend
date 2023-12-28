@@ -36,10 +36,10 @@ const ListenerRegister = (req, res) => {
   listener
     .save()
     .then((response) => {
-      console.log(response);
       res.json({
         status: 200,
         msg: "saved",
+        data:response
       });
     })
     .catch((err) => {
