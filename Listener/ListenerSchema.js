@@ -59,7 +59,7 @@ const ListenerSchema=mongoose.Schema({
     },
     image: {
         type: Object,
-        // required: true
+        required: true
     }
 
 })

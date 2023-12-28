@@ -40,6 +40,7 @@ const ListenerRegister = (req, res) => {
       res.json({
         status: 200,
         msg: "saved",
+        data:response
       });
     })
     .catch((err) => {
