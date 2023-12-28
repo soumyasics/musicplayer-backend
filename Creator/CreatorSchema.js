@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const ListenerSchema=mongoose.Schema({
+const CreatorSchema=mongoose.Schema({
     firstname: {
         type: String,
         required: true
@@ -59,8 +59,12 @@ const ListenerSchema=mongoose.Schema({
     },
     image: {
         type: Object,
+       
+    },
+    aadhar:{
+        type: Number,
         required: true
     }
 
 })
-module.exports=mongoose.model('listeners',ListenerSchema)
+module.exports=mongoose.model('creators',CreatorSchema)

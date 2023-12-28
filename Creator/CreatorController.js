@@ -1,8 +1,9 @@
 const express = require("express");
-const ListenerSchema = require("./ListenerSchema");
+const ListenerSchema = require("./CreatorSchema");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const jwt = require("jsonwebtoken");
+const CreatorSchema = require("./CreatorSchema");
 
 const storage = multer.diskStorage({
   destination: function (req, res, cb) {
@@ -15,10 +16,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage }).single("image");
 
-const ListenerRegister = (req, res) => {
+const CreatorRegister = (req, res) => {
   console.log(req ,"ll");
   let image = req.file;
-  let listener = new ListenerSchema({
+  let listener = new CreatorSchema({
     firstname: req.body.firstname,
     lastname: req.body.lastname,
     email: req.body.email,
@@ -32,6 +33,8 @@ const ListenerRegister = (req, res) => {
     mobile: req.body.mobile,
     country: req.body.country,
     image: image,
+    aadhar:req.body.aadhar
+
   });
   listener
     .save()
@@ -58,14 +61,14 @@ const ListenerRegister = (req, res) => {
     });
 };
 
-const ListenerLogin = async (req, res) => {
+const CreatorLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const listener = await ListenerSchema.findOne({ email: email });
-    if (listener) {
-      if (listener.password === password) {
+    const creators = await CreatorSchema.findOne({ email: email });
+    if (creators) {
+      if (creators.password === password) {
         const token = jwt.sign(
-          { email: listener.email, password: listener.password },
+          { email: creators.email, password: creators.password },
           "secret_key",
           { expiresIn: 86400 }
         );
@@ -83,10 +86,10 @@ const ListenerLogin = async (req, res) => {
   }
 };
 
-//View all Customers
+
   
-const viewListeners=(req,res)=>{
-  ListenerSchema.find().exec()
+const viewCreators=(req,res)=>{
+  CreatorSchema.find().exec()
   .then(data=>{
     if(data.length>0){
     res.json({
@@ -110,15 +113,12 @@ const viewListeners=(req,res)=>{
 
 }
 
-// view Customers finished
 
-
-//update Customer by id
-const editListenerById=(req,res)=>{
+const editCreatorById=(req,res)=>{
 
   
     
-  ListenerSchema.findByIdAndUpdate({_id:req.params.id},{
+  CreatorSchema.findByIdAndUpdate({_id:req.params.id},{
     firstname: req.body.firstname,
     lastname: req.body.lastname,
     email: req.body.email,
@@ -131,6 +131,7 @@ const editListenerById=(req,res)=>{
     mobile: req.body.mobile,
     country: req.body.country,
     image: image,
+    aadhar:req.body.aadhar
     })
 .exec().then(data=>{
   res.json({
@@ -146,8 +147,8 @@ const editListenerById=(req,res)=>{
 })
 }
 // view cust by id
-const viewListenerById=(req,res)=>{
-  ListenerSchema.findById({_id:req.params.id}).exec()
+const viewCreatorById=(req,res)=>{
+  CreatorSchema.findById({_id:req.params.id}).exec()
   .then(data=>{
 
     console.log(data);
@@ -168,8 +169,8 @@ const viewListenerById=(req,res)=>{
 
 }
 
-const deleteListenerById=(req,res)=>{
-  ListenerSchema.findByIdAndDelete({_id:req.params.id}).exec()
+const deleteCreatorById=(req,res)=>{
+  CreatorSchema.findByIdAndDelete({_id:req.params.id}).exec()
   .then(data=>{
     console.log(data);
     res.json({
@@ -189,10 +190,10 @@ const deleteListenerById=(req,res)=>{
 
 }
 //forgotvPawd Customer by id
-const forgotPwd=(req,res)=>{
+const forgotPwdCreator=(req,res)=>{
 
      
-  ListenerSchema.findOneAndUpdate({email:req.body.email},{
+  CreatorSchema.findOneAndUpdate({email:req.body.email},{
        password:req.body.password
     })
 .exec().then(data=>{
@@ -219,11 +220,11 @@ const forgotPwd=(req,res)=>{
 
 module.exports = {
   upload,
-  ListenerRegister,
-  ListenerLogin,
-  deleteListenerById,
-  editListenerById,
-  viewListenerById,
-  forgotPwd,
-  viewListeners
+  CreatorRegister,
+  CreatorLogin,
+  deleteCreatorById,
+  editCreatorById,
+  viewCreatorById,
+  forgotPwdCreator,
+  viewCreators
 };
