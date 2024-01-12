@@ -40,11 +40,6 @@ const CreatorSchema=mongoose.Schema({
         required: true
     },
 
-    state: {
-        type: String,
-        required: true
-    },
-
     pincode: {
         type: String,
         required: true
@@ -60,11 +55,6 @@ const CreatorSchema=mongoose.Schema({
     image: {
         type: Object,
        
-    },
-    aadhar:{
-        type: Number,
-        required: true
     }
-
 })
 module.exports=mongoose.model('creators',CreatorSchema)
