@@ -13,10 +13,11 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage }).single("image");
+const upload = multer({ storage: storage }).single("file");
 
 const ListenerRegister = (req, res) => {
-  console.log(req ,"ll");
+console.log(req.body);
+ console.log(req.file);
   let image = req.file;
   let listener = new ListenerSchema({
     firstname: req.body.firstname,
@@ -31,14 +32,14 @@ const ListenerRegister = (req, res) => {
     pincode: req.body.pincode,
     mobile: req.body.mobile,
     country: req.body.country,
-    image: image,
+    image: req.file,
   });
   listener
     .save()
     .then((response) => {
       res.json({
         status: 200,
-        msg: "saved",
+        msg: "Successfully registered",
         data:response
       });
     })
@@ -113,12 +114,9 @@ const viewListeners=(req,res)=>{
 // view Customers finished
 
 
-//update Customer by id
 const editListenerById=(req,res)=>{
 
-  
-    
-  ListenerSchema.findByIdAndUpdate({_id:req.params.id},{
+  ListenerSchema.findByIdAndUpdate({_id:req.body.id},{
     firstname: req.body.firstname,
     lastname: req.body.lastname,
     email: req.body.email,
@@ -130,7 +128,7 @@ const editListenerById=(req,res)=>{
     pincode: req.body.pincode,
     mobile: req.body.mobile,
     country: req.body.country,
-    image: image,
+    image: req.file,
     })
 .exec().then(data=>{
   res.json({
@@ -147,7 +145,8 @@ const editListenerById=(req,res)=>{
 }
 // view cust by id
 const viewListenerById=(req,res)=>{
-  ListenerSchema.findById({_id:req.params.id}).exec()
+  
+  ListenerSchema.findById({_id:req.body.id}).exec()
   .then(data=>{
 
     console.log(data);

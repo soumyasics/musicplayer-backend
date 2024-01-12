@@ -23,7 +23,7 @@ const ListenerSchema=mongoose.Schema({
     },
   
     dob: {
-        type: Date,
+        type: String,
         required: true
     },
     gender: {
@@ -36,11 +36,6 @@ const ListenerSchema=mongoose.Schema({
     },
 
     city: {
-        type: String,
-        required: true
-    },
-
-    state: {
         type: String,
         required: true
     },
@@ -59,7 +54,7 @@ const ListenerSchema=mongoose.Schema({
     },
     image: {
         type: Object,
-        // required: true
+        required: true
     }
 
 })

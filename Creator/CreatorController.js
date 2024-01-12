@@ -14,10 +14,10 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage }).single("image");
+const upload = multer({ storage: storage }).single("file");
 
-const CreatorRegister = (req, res) => {
-  console.log(req ,"ll");
+const CreatorRegister = (req, res) => { 
+   console.log(req.body ,"ll");
   let image = req.file;
   let listener = new CreatorSchema({
     firstname: req.body.firstname,
@@ -28,20 +28,17 @@ const CreatorRegister = (req, res) => {
     gender: req.body.gender,
     street: req.body.street,
     city: req.body.city,
-    state: req.body.state,
     pincode: req.body.pincode,
     mobile: req.body.mobile,
     country: req.body.country,
-    image: image,
-    aadhar:req.body.aadhar
-
+    image: req.file,
   });
-  listener
+  creators
     .save()
     .then((response) => {
       res.json({
         status: 200,
-        msg: "saved",
+        msg: "Succesfully registered",
         data:response
       });
     })
@@ -74,7 +71,7 @@ const CreatorLogin = async (req, res) => {
         );
         return res
           .status(200)
-          .json({ message: "Login successful", token, id: listener._id });
+          .json({ message: "Login successful", token, id: creators._id });
       } else {
         return res.status(401).json({ message: "Password is incorrect" });
       }
@@ -115,10 +112,8 @@ const viewCreators=(req,res)=>{
 
 
 const editCreatorById=(req,res)=>{
-
-  
     
-  CreatorSchema.findByIdAndUpdate({_id:req.params.id},{
+  CreatorSchema.findByIdAndUpdate({_id:req.body.id},{
     firstname: req.body.firstname,
     lastname: req.body.lastname,
     email: req.body.email,
@@ -130,8 +125,7 @@ const editCreatorById=(req,res)=>{
     pincode: req.body.pincode,
     mobile: req.body.mobile,
     country: req.body.country,
-    image: image,
-    aadhar:req.body.aadhar
+    image: req.file,
     })
 .exec().then(data=>{
   res.json({
@@ -148,7 +142,7 @@ const editCreatorById=(req,res)=>{
 }
 // view cust by id
 const viewCreatorById=(req,res)=>{
-  CreatorSchema.findById({_id:req.params.id}).exec()
+  CreatorSchema.findById({_id:req.body.id}).exec()
   .then(data=>{
 
     console.log(data);
