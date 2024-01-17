@@ -16,8 +16,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage }).single("file");
 
 const ListenerRegister = (req, res) => {
-console.log(req.body);
- console.log(req.file);
+// console.log(req.body);
+//  console.log(req.file);
   let image = req.file;
   let listener = new ListenerSchema({
     firstname: req.body.firstname,

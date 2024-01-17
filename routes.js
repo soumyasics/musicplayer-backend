@@ -19,6 +19,7 @@ router.post('/creatorLogin',creator.CreatorLogin)
 router.post('/CreatorRegister',creator.upload,creator.CreatorRegister)
 router.post('/editCreatorById',creator.upload,creator.editCreatorById)
 router.post('/viewCreatorById',creator.viewCreatorById)
+router.post('/creator_upload_podcast',creator.multipleUpload,creator.creatorUploadPodcast)
 
 
 router.post('/deleteCreatorById/:id',creator.deleteCreatorById)
