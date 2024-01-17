@@ -1,9 +1,10 @@
 const express = require("express");
-const ListenerSchema = require("./CreatorSchema");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const jwt = require("jsonwebtoken");
 const CreatorSchema = require("./CreatorSchema");
+const CreatorPodcastSchema= require("./CreatorPodcastSchema");
+
 
 const storage = multer.diskStorage({
   destination: function (req, res, cb) {
@@ -15,11 +16,11 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage }).single("file");
+const multipleUpload = multer({ storage: storage }).array("files",2);
 
 const CreatorRegister = (req, res) => { 
-   console.log(req.body ,"ll");
   let image = req.file;
-  let listener = new CreatorSchema({
+  let creators = new CreatorSchema({
     firstname: req.body.firstname,
     lastname: req.body.lastname,
     email: req.body.email,
@@ -212,6 +213,47 @@ const forgotPwdCreator=(req,res)=>{
 })
 }
 
+
+const creatorUploadPodcast=(req,res)=>{
+  // console.log(req.body);
+  // console.log(req.files);
+  // res.send("tha")
+
+  let image = req.file;
+  let creatorsPodcast = new CreatorPodcastSchema({
+    creatorname: req.body.creatorname,
+    podcastname: req.body.podcastname,
+    description: req.body.description,
+    image: req.files,
+    audio: req.files
+  });
+  creatorsPodcast
+    .save()
+    .then((response) => {
+      res.json({
+        status: 200,
+        msg: "Podcast uploaded Succesfully",
+        data:response
+      });
+    })
+    .catch((err) => {
+      if (err.code == 11000) {
+        res.json({
+          status: 409,
+          msg: "already uploaded",
+        });
+      }
+       else {
+        console.log(err);
+        res.json({
+          status: 500,
+          msg: "error",
+        });
+      }
+    });
+}
+
+
 module.exports = {
   upload,
   CreatorRegister,
@@ -220,5 +262,7 @@ module.exports = {
   editCreatorById,
   viewCreatorById,
   forgotPwdCreator,
-  viewCreators
+  viewCreators,
+  creatorUploadPodcast,
+  multipleUpload
 };
