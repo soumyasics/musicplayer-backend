@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const multer = require("multer");
 const jwt = require("jsonwebtoken");
 const CreatorSchema = require("./CreatorSchema");
-const CreatorPodcastSchema= require("./CreatorPodcastSchema");
 
 
 const storage = multer.diskStorage({
@@ -16,7 +15,6 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage }).single("file");
-const multipleUpload = multer({ storage: storage }).array("files",2);
 
 const CreatorRegister = (req, res) => { 
   let image = req.file;
@@ -72,7 +70,8 @@ const CreatorLogin = async (req, res) => {
         );
         return res
           .status(200)
-          .json({ message: "Login successful", token, id: creators._id });
+          .json({ message: "Login successful", token, id: creators._id, creatorname: creators.firstname
+});
       } else {
         return res.status(401).json({ message: "Password is incorrect" });
       }
@@ -214,44 +213,6 @@ const forgotPwdCreator=(req,res)=>{
 }
 
 
-const creatorUploadPodcast=(req,res)=>{
-  // console.log(req.body);
-  // console.log(req.files);
-  // res.send("tha")
-
-  let image = req.file;
-  let creatorsPodcast = new CreatorPodcastSchema({
-    creatorname: req.body.creatorname,
-    podcastname: req.body.podcastname,
-    description: req.body.description,
-    image: req.files,
-    audio: req.files
-  });
-  creatorsPodcast
-    .save()
-    .then((response) => {
-      res.json({
-        status: 200,
-        msg: "Podcast uploaded Succesfully",
-        data:response
-      });
-    })
-    .catch((err) => {
-      if (err.code == 11000) {
-        res.json({
-          status: 409,
-          msg: "already uploaded",
-        });
-      }
-       else {
-        console.log(err);
-        res.json({
-          status: 500,
-          msg: "error",
-        });
-      }
-    });
-}
 
 
 module.exports = {
@@ -263,6 +224,4 @@ module.exports = {
   viewCreatorById,
   forgotPwdCreator,
   viewCreators,
-  creatorUploadPodcast,
-  multipleUpload
 };
