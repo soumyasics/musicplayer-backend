@@ -3,6 +3,7 @@ const router = express.Router();
 
 const listener=require('./Listener/ListenerController')
 const creator=require('./Creator/CreatorController')
+const creatorpodcast=require('./Creator/CreatorPodcastController')
 
 const admin=require('./Admin/AdminControl')
 
@@ -19,8 +20,13 @@ router.post('/creatorLogin',creator.CreatorLogin)
 router.post('/CreatorRegister',creator.upload,creator.CreatorRegister)
 router.post('/editCreatorById',creator.upload,creator.editCreatorById)
 router.post('/viewCreatorById',creator.viewCreatorById)
-router.post('/creator_upload_podcast',creator.multipleUpload,creator.creatorUploadPodcast)
 
+
+router.post('/creator_upload_podcast',creatorpodcast.multipleUpload,creatorpodcast.creatorUploadPodcast)
+router.post('/getPodcastByID',creatorpodcast.viewCreatorPodcastById)
+router.post('/creator_edit_upload_podcast',creatorpodcast.multipleUpload,creatorpodcast.editCreatorPodcastById)
+
+router.post('/getAllPodcastByCreator',creatorpodcast.getAllPodcastByCreator)
 
 router.post('/deleteCreatorById/:id',creator.deleteCreatorById)
 router.post('/forgotPwdCreator',creator.forgotPwdCreator)

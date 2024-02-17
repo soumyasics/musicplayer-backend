@@ -1,30 +1,22 @@
 const mongoose = require("mongoose");
 
-const CreatorPodcastSchema = mongoose.Schema({
+const CreatorEpisodeSchema = mongoose.Schema({
   creatorId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "creators",
   },
-  creatorname: {
-    type: String,
-    required: true,
-  },
-  podcastname: {
+  episodeid: {
     type: String,
     required: true,
   },
 
-  description: {
-    type: String,
+  episodecount: {
+    type: Number,
     required: true,
   },
-  coverimage: {
+  audio: {
     type: Object,
     required: true,
   },
-  episodecount:{
-    type:Number,
-    default:0
-  }
 });
 module.exports = mongoose.model("creatorsPodcast", CreatorPodcastSchema);
