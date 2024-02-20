@@ -4,8 +4,9 @@ const router = express.Router();
 const listener=require('./Listener/ListenerController')
 const creator=require('./Creator/CreatorController')
 const creatorpodcast=require('./Creator/CreatorPodcastController')
-
 const admin=require('./Admin/AdminControl')
+const subscriptionController=require('./Listener/Subscriptions/subscriptionController')
+
 
 //Listeners
 router.post('/listenerLogin',listener.ListenerLogin)
@@ -33,5 +34,16 @@ router.post('/viewCreators',creator.viewCreators)
 
 //admin
 router.post('/admin_login',admin.adiminLogin)
+
+
+
+//Subsription routes
+//Done By Soumya
+
+router.post('/subscribeCreator/:id',subscriptionController.subscribeCreator)
+router.post('/viewSubscriptionByCreatorId/:id',subscriptionController.viewSubscriptionByCreatorId)
+router.post('/viewSubscriptionById/:id',subscriptionController.viewSubscriptionById)
+router.post('/updatePayment/:id',subscriptionController.updatePayment)
+router.post('/viewSubscriptionByListenerId/:id',subscriptionController.viewSubscriptionByListenerId)
 
 module.exports=router
