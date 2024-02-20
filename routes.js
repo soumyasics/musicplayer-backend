@@ -13,7 +13,7 @@ router.post('/editListenerById',listener.upload,listener.editListenerById)
 router.post('/viewListenerById',listener.viewListenerById)
 
 router.post('/deleteListenerById/:id',listener.deleteListenerById)
-router.post('/forgotPwd',listener.forgotPwd)
+router.post('/listenerforgotpassword',listener.forgotPwd)
 router.post('/viewListeners',listener.viewListeners)
 
 router.post('/creatorLogin',creator.CreatorLogin)

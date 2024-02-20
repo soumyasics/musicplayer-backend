@@ -189,16 +189,16 @@ const deleteListenerById=(req,res)=>{
 }
 //forgotvPawd Customer by id
 const forgotPwd=(req,res)=>{
-
+console.log(req.body,'uuu');
      
   ListenerSchema.findOneAndUpdate({email:req.body.email},{
-       password:req.body.password
+       password:req.body.password},{conformpassword:req.body.conformpassword
     })
 .exec().then(data=>{
   if(data!=null)
   res.json({
       status:200,
-      msg:"Updated successfully"
+      msg:"password Updated successfully"
   })
   else
   res.json({
