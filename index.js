@@ -14,6 +14,7 @@ app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 
 app.use(cors())
+
 const route=require('./routes')
 app.use('/podcast',route)
 
@@ -21,3 +22,4 @@ const PORT = 4000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
