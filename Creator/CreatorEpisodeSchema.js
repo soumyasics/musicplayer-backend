@@ -19,4 +19,4 @@ const CreatorEpisodeSchema = mongoose.Schema({
     required: true,
   },
 });
-module.exports = mongoose.model("creatorsPodcast", CreatorPodcastSchema);
+module.exports = mongoose.model("creatorsPodcast", CreatorEpisodeSchema);
