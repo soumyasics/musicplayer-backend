@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
     },
   });
 
-const multipleUpload = multer({ storage: storage }).single("files");
+const upload = multer({ storage: storage }).single("file");
 
 const addDemo=(req,res)=>{
    let date=new Date()
@@ -21,7 +21,8 @@ const addDemo=(req,res)=>{
       
       description: req.body.description,
       creatorId: req.body.creatorId,
-      date:date
+      date:date,
+      audio:req.file
       
     });
     demo
@@ -96,11 +97,13 @@ const addDemo=(req,res)=>{
   
   }
   const editDemoById=(req,res)=>{
-    
-    demo.findByIdAndUpdate({_id:req.body.id},{
+    let date =new Date()
+    demoAudioSchema.findByIdAndUpdate({_id:req.body.id},{
         description: req.body.description,
         creatorId: req.body.creatorId,
-        date:date
+        date:date,
+        audio:req.file
+
       })
   .exec().then(data=>{
     res.json({
@@ -116,7 +119,7 @@ const addDemo=(req,res)=>{
   })
   }
   const getAllDemo=(req,res)=>{
-    CreatorPodcastSchema.find({creatorId:req.body.id})
+    demoAudioSchema.find({creatorId:req.body.id})
     .then(data=>{
   
       console.log(data);
@@ -140,4 +143,5 @@ const addDemo=(req,res)=>{
     viewDemoById,
     getAllDemo,
     editDemoById,
-    viewDemoByCreatorId}
+    viewDemoByCreatorId,
+  upload}

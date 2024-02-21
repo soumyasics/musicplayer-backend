@@ -19,6 +19,10 @@ const DemoaudioSchema = mongoose.Schema({
   },
   date:{
     type:Date
+  },
+  audio:{
+    type:Object,
+    required:true
   }
   
 });

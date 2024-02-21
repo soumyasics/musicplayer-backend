@@ -49,10 +49,10 @@ router.post('/viewSubscriptionByListenerId/:id',subscriptionController.viewSubsc
 
 //demo routes
 //Done By Soumya
-router.post('/subscribeCreator',DemoAudioController.addDemo)
-router.post('/subscribeCreator',DemoAudioController.viewDemoByCreatorId)
-router.post('/subscribeCreator',DemoAudioController.viewDemoById)
-router.post('/subscribeCreator',DemoAudioController.editDemoById)
+router.post('/addDemo',DemoAudioController.upload,DemoAudioController.addDemo)
+router.post('/viewDemoByCreatorId',DemoAudioController.viewDemoByCreatorId)
+router.post('/viewDemoById',DemoAudioController.viewDemoById)
+router.post('/editDemoById',DemoAudioController.upload,DemoAudioController.editDemoById)
 
 
 module.exports=router
