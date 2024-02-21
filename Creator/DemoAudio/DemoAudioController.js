@@ -1,6 +1,7 @@
-const CreatorPodcastSchema= require("./CreatorPodcastSchema");
+//Soumya on 21/02
+
+const demoAudioSchema= require("./DemoAudioSchema");
 const multer = require("multer");
-const DemoAudioSchema = require("./DemoAudio/DemoAudioSchema");
 
 const storage = multer.diskStorage({
     destination: function (req, res, cb) {
@@ -13,21 +14,22 @@ const storage = multer.diskStorage({
 
 const multipleUpload = multer({ storage: storage }).single("files");
 
-const creatorUploadPodcast=async(req,res)=>{ 
+const addDemo=(req,res)=>{
+   let date=new Date()
 
-    let creatorsPodcast = new CreatorPodcastSchema({
-      creatorname:req.body.creatorname,
-      podcastname: req.body.podcastname,
+    let demo = new demoAudioSchema({
+      
       description: req.body.description,
-      coverimage: req.file,
-      creatorId: req.body.creatorId
+      creatorId: req.body.creatorId,
+      date:date
+      
     });
-    creatorsPodcast
+    demo
       .save()
       .then((response) => {
         res.json({
           status: 200,
-          msg: "Podcast uploaded Succesfully",
+          msg: "demo audio uploaded Succesfully",
           data:response
         });
       })
@@ -51,13 +53,11 @@ const creatorUploadPodcast=async(req,res)=>{
 
   
 
-  const viewCreatorPodcastById=(req,res)=>{
-    console.log(req.body)
-    CreatorPodcastSchema.findById({_id:req.body.id})
+  const viewDemoById=(req,res)=>{
+   
+    demoAudioSchema.findById({_id:req.body.id})
     .then(data=>{
-  
-      console.log(data);
-      res.json({
+        res.json({
           status:200,
           msg:"Data obtained successfully",
           data:data
@@ -74,21 +74,33 @@ const creatorUploadPodcast=async(req,res)=>{
   
   }
   
-  const editCreatorPodcastById=(req,res)=>{
+
+  const viewDemoByCreatorId=(req,res)=>{
+   
+    demoAudioSchema.findById({creatorid:req.body.id})
+    .then(data=>{
+        res.json({
+          status:200,
+          msg:"Data obtained successfully",
+          data:data
+      })
     
-    CreatorSchema.findByIdAndUpdate({_id:req.body.id},{
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      email: req.body.email,
-      dob: req.body.dob,
-      gender: req.body.gender,
-      street: req.body.street,
-      city: req.body.city,
-      state: req.body.state,
-      pincode: req.body.pincode,
-      mobile: req.body.mobile,
-      country: req.body.country,
-      image: req.file,
+  }).catch(err=>{
+    console.log(err);
+      res.json({
+          status:500,
+          msg:"No Data obtained",
+          Error:err
+      })
+  })
+  
+  }
+  const editDemoById=(req,res)=>{
+    
+    demo.findByIdAndUpdate({_id:req.body.id},{
+        description: req.body.description,
+        creatorId: req.body.creatorId,
+        date:date
       })
   .exec().then(data=>{
     res.json({
@@ -103,8 +115,7 @@ const creatorUploadPodcast=async(req,res)=>{
     })
   })
   }
-  const getAllPodcastByCreator=(req,res)=>{
-    console.log('msncbhdv');
+  const getAllDemo=(req,res)=>{
     CreatorPodcastSchema.find({creatorId:req.body.id})
     .then(data=>{
   
@@ -125,4 +136,8 @@ const creatorUploadPodcast=async(req,res)=>{
   })
   }
 
-  module.exports={creatorUploadPodcast,multipleUpload,viewCreatorPodcastById,editCreatorPodcastById,getAllPodcastByCreator}
+  module.exports={addDemo,
+    viewDemoById,
+    getAllDemo,
+    editDemoById,
+    viewDemoByCreatorId}
