@@ -6,6 +6,7 @@ const creator=require('./Creator/CreatorController')
 const creatorpodcast=require('./Creator/CreatorPodcastController')
 const admin=require('./Admin/AdminControl')
 const subscriptionController=require('./Listener/Subscriptions/subscriptionController')
+const DemoAudioController=require('./Creator/DemoAudio/DemoAudioController')
 
 
 //Listeners
@@ -45,5 +46,13 @@ router.post('/viewSubscriptionByCreatorId/:id',subscriptionController.viewSubscr
 router.post('/viewSubscriptionById/:id',subscriptionController.viewSubscriptionById)
 router.post('/updatePayment/:id',subscriptionController.updatePayment)
 router.post('/viewSubscriptionByListenerId/:id',subscriptionController.viewSubscriptionByListenerId)
+
+//demo routes
+//Done By Soumya
+router.post('/addDemo',DemoAudioController.upload,DemoAudioController.addDemo)
+router.post('/viewDemoByCreatorId',DemoAudioController.viewDemoByCreatorId)
+router.post('/viewDemoById',DemoAudioController.viewDemoById)
+router.post('/editDemoById',DemoAudioController.upload,DemoAudioController.editDemoById)
+
 
 module.exports=router
