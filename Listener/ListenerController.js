@@ -3,7 +3,7 @@ const ListenerSchema = require("./ListenerSchema");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const jwt = require("jsonwebtoken");
-
+const  CreatorPodcastSchema = require("../Creator/CreatorPodcastSchema");
 const storage = multer.diskStorage({
   destination: function (req, res, cb) {
     cb(null, "./upload");
@@ -215,7 +215,26 @@ console.log(req.body,'uuu');
   })
 })
 }
-
+const getAllPodcast=(req, res)=>{
+  CreatorPodcastSchema.find({})
+    .then(data=>{
+  
+      console.log(data);
+      res.json({
+          status:200,
+          msg:"Data obtained successfully",
+          data:data
+      })
+    
+  }).catch(err=>{
+    console.log(err);
+      res.json({
+          status:500,
+          msg:"No Data obtained",
+          Error:err
+      })
+  })
+}
 module.exports = {
   upload,
   ListenerRegister,
@@ -224,5 +243,6 @@ module.exports = {
   editListenerById,
   viewListenerById,
   forgotPwd,
-  viewListeners
+  viewListeners,
+  getAllPodcast
 };

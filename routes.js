@@ -7,6 +7,7 @@ const creatorpodcast=require('./Creator/CreatorPodcastController')
 const admin=require('./Admin/AdminControl')
 const subscriptionController=require('./Listener/Subscriptions/subscriptionController')
 const DemoAudioController=require('./Creator/DemoAudio/DemoAudioController')
+const episode=require('./Creator/CreatorEpisodeController')
 
 
 //Listeners
@@ -17,6 +18,7 @@ router.post('/viewListenerById',listener.viewListenerById)
 router.post('/deleteListenerById/:id',listener.deleteListenerById)
 router.post('/listenerforgotpassword',listener.forgotPwd)
 router.post('/viewListeners',listener.viewListeners)
+router.post('/getAllpodcast',listener.getAllPodcast)
 
 
 //Creators
@@ -31,6 +33,10 @@ router.post('/getAllPodcastByCreator',creatorpodcast.getAllPodcastByCreator)
 router.post('/deleteCreatorById/:id',creator.deleteCreatorById)
 router.post('/forgotPwdCreator',creator.forgotPwdCreator)
 router.post('/viewCreators',creator.viewCreators)
+
+
+// episode
+router.post('/uploadepisode',episode.multipleUpload, episode.CreatorEpisode)
 
 
 //admin

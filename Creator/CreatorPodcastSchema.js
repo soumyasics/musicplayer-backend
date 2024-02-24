@@ -18,7 +18,15 @@ const CreatorPodcastSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  price: {
+    type: String,
+    required: true,
+  },
   coverimage: {
+    type: Object,
+    required: true,
+  },
+  audio: {
     type: Object,
     required: true,
   },

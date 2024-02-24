@@ -11,15 +11,19 @@ const storage = multer.diskStorage({
     },
   });
 
-const multipleUpload = multer({ storage: storage }).single("files");
+const multipleUpload = multer({ storage: storage }).array("files",2);
 
 const creatorUploadPodcast=async(req,res)=>{ 
-
+  console.log('test')
+console.log(req.file)
+console.log(req.files)
     let creatorsPodcast = new CreatorPodcastSchema({
       creatorname:req.body.creatorname,
       podcastname: req.body.podcastname,
       description: req.body.description,
-      coverimage: req.file,
+      price:req.body.price,
+      coverimage: req.files[0],
+      audio: req.files[1],
       creatorId: req.body.creatorId
     });
     creatorsPodcast
@@ -39,7 +43,7 @@ const creatorUploadPodcast=async(req,res)=>{
           });
         }
          else {
-          console.log(err);
+          // console.log(err);
           res.json({
             status: 500,
             msg: "error",
