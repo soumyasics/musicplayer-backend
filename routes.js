@@ -47,18 +47,16 @@ router.post('/admin_login',admin.adiminLogin)
 //Subsription routes
 //Done By Soumya
 
-router.post('/subscribeCreator/:id',subscriptionController.subscribeCreator)
-router.post('/viewSubscriptionByCreatorId/:id',subscriptionController.viewSubscriptionByCreatorId)
-router.post('/viewSubscriptionById/:id',subscriptionController.viewSubscriptionById)
-router.post('/updatePayment/:id',subscriptionController.updatePayment)
-router.post('/viewSubscriptionByListenerId/:id',subscriptionController.viewSubscriptionByListenerId)
+// router.post('/subscribeCreator/:id',subscriptionController.subscribeCreator)
+// router.post('/viewSubscriptionByCreatorId/:id',subscriptionController.viewSubscriptionByCreatorId)
+// router.post('/viewSubscriptionById/:id',subscriptionController.viewSubscriptionById)
+// router.post('/updatePayment/:id',subscriptionController.updatePayment)
+// router.post('/viewSubscriptionByListenerId/:id',subscriptionController.viewSubscriptionByListenerId)
 
 //demo routes
-//Done By Soumya
-router.post('/addDemo',DemoAudioController.upload,DemoAudioController.addDemo)
-router.post('/viewDemoByCreatorId',DemoAudioController.viewDemoByCreatorId)
-router.post('/viewDemoById',DemoAudioController.viewDemoById)
-router.post('/editDemoById',DemoAudioController.upload,DemoAudioController.editDemoById)
+//Done By Ajeena
+router.post('/subscribePodcast',subscriptionController.subscribePodcast)
+router.post('/viewSubscriptionByListenerId',subscriptionController.getSubscriptionByListenerId)
 
 
 module.exports=router

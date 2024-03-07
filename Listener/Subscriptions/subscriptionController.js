@@ -2,46 +2,47 @@
 
 // Done By Soumya on 20/02
 
-let subscription=require('./subscriptionSchema')
-const subscribeCreator=(req,res)=>{
-    console.log(req.body);
-   // console.log(req.files);
-   // res.send("tha")
- 
-   // let image = req.file;
+let SubSchema=require('./subscriptionSchema')
 
-   let subscription = new subscription({
-    listenerid:req.params.listenerid,
-     creatorid: req.body.creatorid,
-     date: req.body.date
+// const subscribeCreator=(req,res)=>{
+//     console.log(req.body);
+//    // console.log(req.files);
+//    // res.send("tha")
+ 
+//    // let image = req.file;
+
+//    let subscription = new subscription({
+//     listenerid:req.params.listenerid,
+//      creatorid: req.body.creatorid,
+//      date: req.body.date
      
-   });
-   subscription
+//    });
+//    subscription
    
-     .save()
-     .then((response) => {
-       res.json({
-         status: 200,
-         msg: "Podcast uploaded Succesfully",
-         data:response
-       });
-     })
-     .catch((err) => {
-       if (err.code == 11000) {
-         res.json({
-           status: 409,
-           msg: "already uploaded",
-         });
-       }
-        else {
-         console.log(err);
-         res.json({
-           status: 500,
-           msg: "error",
-         });
-       }
-     });
- }
+//      .save()
+//      .then((response) => {
+//        res.json({
+//          status: 200,
+//          msg: "Podcast uploaded Succesfully",
+//          data:response
+//        });
+//      })
+//      .catch((err) => {
+//        if (err.code == 11000) {
+//          res.json({
+//            status: 409,
+//            msg: "already uploaded",
+//          });
+//        }
+//         else {
+//          console.log(err);
+//          res.json({
+//            status: 500,
+//            msg: "error",
+//          });
+//        }
+//      });
+//  }
 
 
  
@@ -124,10 +125,69 @@ const subscribeCreator=(req,res)=>{
  })
  }
 
+// done by ajeena
+
+
+ const subscribePodcast=async(req,res)=>{
+  console.log(req.body);
+
+ let subscription = await new SubSchema({
+  listenerid:req.body.listenerid,
+   podcastid: req.body.podcastid,
+   date: new Date(),
+   paymentstatus: req.body.paymentstatus,
+   isactive:true
+ });
+
+subscription
+   .save()
+   .then((response) => {
+     res.json({
+       status: 200,
+       msg: "Podcast subscribed Succesfully",
+       data:response
+     });
+   })
+   .catch((err) => {
+     if (err.code == 11000) {
+       res.json({
+         status: 409,
+         msg: "already subscribed",
+       });
+     }
+      else {
+       console.log(err);
+       res.json({
+         status: 500,
+         msg: "error",
+       });
+     }
+   });
+}
+
+const getSubscriptionByListenerId=(req,res)=>{
+   
+  SubSchema.find({listenerid:req.body.id}).populate('podcastid')
+.exec().then(data=>{
+ res.json({
+     status:200,
+     msg:"success",
+     data: data
+ })
+}).catch(err=>{
+ res.json({
+     status:500,
+     msg:"error",
+     Error:err
+ })
+})
+}
+
  module.exports={
-    subscribeCreator,
     viewSubscriptionByCreatorId,
     viewSubscriptionById,
     viewSubscriptionByListenerId,
-    updatePayment
+    updatePayment,
+    subscribePodcast,
+    getSubscriptionByListenerId
  }

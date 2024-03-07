@@ -8,9 +8,9 @@ const SubSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "listeners",
     },
-    creatorId: {
+    podcastid: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "creators",
+        ref: "creatorsPodcast",
       },
     paymentstatus: {
         type: Boolean,
