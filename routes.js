@@ -33,7 +33,8 @@ router.post('/getAllPodcastByCreator',creatorpodcast.getAllPodcastByCreator)
 router.post('/deleteCreatorById/:id',creator.deleteCreatorById)
 router.post('/forgotPwdCreator',creator.forgotPwdCreator)
 router.post('/viewCreators',creator.viewCreators)
-
+// podcast
+// router.post("/viewpodcasts",)
 
 // episode
 router.post('/uploadepisode',episode.multipleUpload, episode.CreatorEpisode)
@@ -57,6 +58,6 @@ router.post('/admin_login',admin.adiminLogin)
 //Done By Ajeena
 router.post('/subscribePodcast',subscriptionController.subscribePodcast)
 router.post('/viewSubscriptionByListenerId',subscriptionController.getSubscriptionByListenerId)
-
+router.post('/viewsubscriptions',subscriptionController.Subcsriptions)
 
 module.exports=router

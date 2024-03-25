@@ -183,11 +183,38 @@ const getSubscriptionByListenerId=(req,res)=>{
 })
 }
 
+const Subcsriptions=(req,res)=>{
+  SubSchema.find().exec()
+  .then(data=>{
+    if(data.length>0){
+    res.json({
+        status:200,
+        msg:"Data obtained successfully",
+        data:data
+    })
+  }else{
+    res.json({
+      status:200,
+      msg:"No Data obtained "
+  })
+  }
+}).catch(err=>{
+    res.json({
+        status:500,
+        msg:"Data not Inserted",
+        Error:err
+    })
+})
+
+}
+
+
  module.exports={
     viewSubscriptionByCreatorId,
     viewSubscriptionById,
     viewSubscriptionByListenerId,
     updatePayment,
     subscribePodcast,
-    getSubscriptionByListenerId
+    getSubscriptionByListenerId,
+    Subcsriptions
  }
