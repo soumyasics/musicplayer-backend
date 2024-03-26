@@ -39,8 +39,12 @@ router.post("/getEpisodedOfPodcast", creatorpodcast.getEpisodedOfPodcast)
 router.post("/creatorCollection",creator.creatorCollection)
 router.post("/getSubscriptions",creator.getSubscriptions)
 // episode
-router.post('/uploadepisode',episode.multipleUpload, episode.CreatorEpisode)
 
+
+
+router.post('/uploadepisode',episode.multipleUpload, episode.CreatorEpisode)
+router.post('/editepisode/:id',episode.singleupload,episode.editEpisode)
+router.post('/viewepisodebyid/:id',episode.multipleUpload, episode.viewEpisodeById)
 
 //admin
 router.post('/admin_login',admin.adiminLogin)

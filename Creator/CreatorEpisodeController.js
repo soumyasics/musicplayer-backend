@@ -11,6 +11,7 @@ const storage = multer.diskStorage({
   });
 
 const multipleUpload = multer({ storage: storage }).single("files");
+const singleupload = multer({ dest: 'uploads/' }).single('file')
 
 const CreatorEpisode=async(req,res)=>{ 
 
@@ -48,7 +49,7 @@ const CreatorEpisode=async(req,res)=>{
 
   const viewEpisode=(req,res)=>{
     
-    CreatorSchema.find({}).exec()
+    CreatorEpisodeSchema.find({}).exec()
     .then(data=>{
       if(data.length>0){
       res.json({
@@ -71,5 +72,60 @@ const CreatorEpisode=async(req,res)=>{
   })
   
   }
-  
-module.exports={CreatorEpisode, multipleUpload,viewEpisode}
+
+  const viewEpisodeById = (req, res) => {
+    const id = req.params.id;
+
+    CreatorEpisodeSchema.findById(id)
+        .exec()
+        .then((data) => {
+            if (data) {
+                res.json({
+                    status: 200,
+                    msg: "Data obtained successfully",
+                    data: data
+                });
+            } else {
+                res.json({
+                    status: 400,
+                    msg: "No data obtained"
+                });
+            }
+        })
+        .catch((err) => {
+            res.status(500).json({
+                status: 500,
+                msg: "Error fetching data",
+                Error: err
+            });
+        });
+};
+
+
+
+
+  const editEpisode = (req, res) => {
+    id=req.params.id
+    CreatorEpisodeSchema.findByIdAndUpdate(id,
+        {
+            episodetitle: req.body.episodetitle,
+            episodecount: req.body.episodecount,
+            audio: req.file
+        }
+    )
+    .exec()
+    .then((data) => {
+        res.json({
+            status: 200,
+            msg: "Updated successfully",
+        });
+    })
+    .catch((err) => {
+        res.json({
+            status: 500,
+            msg: "Data not Updated",
+            Error: err,
+        });
+    });
+  }
+module.exports={CreatorEpisode, multipleUpload,viewEpisode,singleupload,editEpisode,viewEpisodeById}
