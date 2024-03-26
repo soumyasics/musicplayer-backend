@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const multer = require("multer");
 const jwt = require("jsonwebtoken");
 const CreatorSchema = require("./CreatorSchema");
+const subscriptionSchema = require("../Listener/Subscriptions/subscriptionSchema");
 
 
 const storage = multer.diskStorage({
@@ -212,6 +213,52 @@ const forgotPwdCreator=(req,res)=>{
 })
 }
 
+const creatorCollection = async (req, res) => {
+  try {
+    const creatorCollection = await CreatorSchema.find({});
+    const count = creatorCollection.length;
+    res.json({ count });
+    // console.log(donorCollections);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+const getSubscriptions=(req,res)=>{  
+  var result = [];
+  var temp;
+  subscriptionSchema.find()
+  .populate('listenerid')
+  .populate('podcastid')
+.exec().then(data=>{
+  if(data!=null) {
+    for (var i in data) {
+      temp = data[i].podcastid.creatorId.toString();
+      if (temp === req.body.id) {
+        result.push(data[i]);
+      }
+    }
+    res.json({
+      status:200,
+      data:result
+  })
+  }
+  else {
+    res.json({
+      status:500,
+      msg:"No subscriptions Found"
+     
+  })
+}
+}).catch(err=>{
+  console.log(err);
+  res.json({
+      status:500,
+      msg:"Data not Updated",
+      Error:err
+  })
+})
+}
 
 
 
@@ -223,5 +270,6 @@ module.exports = {
   editCreatorById,
   viewCreatorById,
   forgotPwdCreator,
-  viewCreators,
+  viewCreators,creatorCollection,
+  getSubscriptions
 };

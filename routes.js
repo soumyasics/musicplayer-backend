@@ -9,7 +9,6 @@ const subscriptionController=require('./Listener/Subscriptions/subscriptionContr
 const DemoAudioController=require('./Creator/DemoAudio/DemoAudioController')
 const episode=require('./Creator/CreatorEpisodeController')
 
-
 //Listeners
 router.post('/listenerLogin',listener.ListenerLogin)
 router.post('/listenerregister',listener.upload,listener.ListenerRegister)
@@ -33,8 +32,12 @@ router.post('/getAllPodcastByCreator',creatorpodcast.getAllPodcastByCreator)
 router.post('/deleteCreatorById/:id',creator.deleteCreatorById)
 router.post('/forgotPwdCreator',creator.forgotPwdCreator)
 router.post('/viewCreators',creator.viewCreators)
-
-
+router.post("/viewepisode/:id", episode.viewEpisode)
+router.post("/getAllPodcast", creatorpodcast.getAllPodcast)
+router.post("/getPodcastByPodcastId", creatorpodcast.getPodcastByPodcastId)
+router.post("/getEpisodedOfPodcast", creatorpodcast.getEpisodedOfPodcast)
+router.post("/creatorCollection",creator.creatorCollection)
+router.post("/getSubscriptions",creator.getSubscriptions)
 // episode
 router.post('/uploadepisode',episode.multipleUpload, episode.CreatorEpisode)
 
@@ -57,6 +60,6 @@ router.post('/admin_login',admin.adiminLogin)
 //Done By Ajeena
 router.post('/subscribePodcast',subscriptionController.subscribePodcast)
 router.post('/viewSubscriptionByListenerId',subscriptionController.getSubscriptionByListenerId)
-
+router.post('/viewsubscriptions',subscriptionController.Subcsriptions)
 
 module.exports=router
