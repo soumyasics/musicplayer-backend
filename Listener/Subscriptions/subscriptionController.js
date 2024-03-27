@@ -129,17 +129,24 @@ let SubSchema=require('./subscriptionSchema')
 
 
  const subscribePodcast=async(req,res)=>{
-  console.log(req.body);
+  let subscription;
 
- let subscription = await new SubSchema({
-  listenerid:req.body.listenerid,
-   podcastid: req.body.podcastid,
-   date: new Date(),
-   paymentstatus: req.body.paymentstatus,
-   isactive:true
- });
+  let data = await SubSchema.find({
+    listenerid:req.body.listenerid,
+     podcastid: req.body.podcastid,
+     paymentstatus: req.body.paymentstatus,
+   });
 
-subscription
+   console.log(data, 'ppp',req.body.podcastid, req.body.listenerid)
+   if (!data.length > 0) {
+    subscription = await new SubSchema({
+      listenerid:req.body.listenerid,
+       podcastid: req.body.podcastid,
+       date: new Date(),
+       paymentstatus: req.body.paymentstatus,
+       isactive:true
+     });
+     subscription
    .save()
    .then((response) => {
      res.json({
@@ -163,6 +170,13 @@ subscription
        });
      }
    });
+   } else {
+    res.json({
+      status: 400,
+      msg: "Already subscribed",
+      data:[]
+    });
+   }
 }
 
 const getSubscriptionByListenerId=(req,res)=>{

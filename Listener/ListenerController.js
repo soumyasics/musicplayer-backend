@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const multer = require("multer");
 const jwt = require("jsonwebtoken");
 const  CreatorPodcastSchema = require("../Creator/CreatorPodcastSchema");
+const  WishlistSchema = require("./WishlistSchema");
 const storage = multer.diskStorage({
   destination: function (req, res, cb) {
     cb(null, "./upload");
@@ -235,6 +236,61 @@ const getAllPodcast=(req, res)=>{
       })
   })
 }
+const addToWishlist = async (req, res)=>{
+  var data = await WishlistSchema.find({
+    listnerId: req.body.listnerId,
+    podcastId: req.body.podcastId,
+  })
+  console.log(data)
+  if (!data.length > 0) {
+    let wishlist = await new WishlistSchema({
+      listnerId: req.body.listnerId,
+      podcastId: req.body.podcastId,
+    });
+    wishlist
+      .save()
+      .then((response) => {
+        res.json({
+          status: 200,
+          msg: "saved to wishlist",
+          data:response
+        });
+      })
+      .catch((err) => {
+          res.json({
+            status: 500,
+            msg: "error",
+          });
+      });
+  } else {
+    res.json({
+      status: 400,
+      msg: "Already in wishlist",
+    });
+  }
+  
+}
+
+const getWishlist=(req, res)=>{
+  
+  WishlistSchema.find({
+    listnerId: req.body.id
+  })
+  .populate('podcastId')
+  .exec()
+  .then(data=>{
+  if(data!=null) {
+    res.json({
+      status:200,
+      data:data})
+  }
+  else {
+    res.json({
+      status:500,
+      msg:"No products Found"
+    })
+  }    
+})}
 module.exports = {
   upload,
   ListenerRegister,
@@ -244,5 +300,7 @@ module.exports = {
   viewListenerById,
   forgotPwd,
   viewListeners,
-  getAllPodcast
+  getAllPodcast,
+  addToWishlist,
+  getWishlist
 };

@@ -18,6 +18,8 @@ router.post('/deleteListenerById/:id',listener.deleteListenerById)
 router.post('/listenerforgotpassword',listener.forgotPwd)
 router.post('/viewListeners',listener.viewListeners)
 router.post('/getAllpodcast',listener.getAllPodcast)
+router.post('/addToWishlist',listener.addToWishlist)
+router.post('/getWishlist',listener.getWishlist)
 
 
 //Creators
