@@ -291,6 +291,19 @@ const getWishlist=(req, res)=>{
     })
   }    
 })}
+
+
+const listenerCollection = async (req, res) => {
+  try {
+    const listenerCollection = await ListenerSchema.find({});
+    const count = listenerCollection.length;
+    res.json({ count });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}; 
+
+
 module.exports = {
   upload,
   ListenerRegister,
@@ -302,5 +315,6 @@ module.exports = {
   viewListeners,
   getAllPodcast,
   addToWishlist,
-  getWishlist
+  getWishlist,
+  listenerCollection
 };

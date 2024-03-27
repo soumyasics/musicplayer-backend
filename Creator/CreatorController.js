@@ -77,7 +77,7 @@ const CreatorLogin = async (req, res) => {
         return res.status(401).json({ message: "Password is incorrect" });
       }
     } else {
-      return res.status(404).json({ message: "listener does not exist" });
+      return res.status(404).json({ message: "creator does not exist" });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -218,7 +218,6 @@ const creatorCollection = async (req, res) => {
     const creatorCollection = await CreatorSchema.find({});
     const count = creatorCollection.length;
     res.json({ count });
-    // console.log(donorCollections);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

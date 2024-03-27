@@ -118,6 +118,7 @@ const CreatorEpisode=async(req,res)=>{
         res.json({
             status: 200,
             msg: "Updated successfully",
+            data:data
         });
     })
     .catch((err) => {
@@ -128,4 +129,26 @@ const CreatorEpisode=async(req,res)=>{
         });
     });
   }
-module.exports={CreatorEpisode, multipleUpload,viewEpisode,singleupload,editEpisode,viewEpisodeById}
+
+  const DeleteEpisode = (req, res) => {
+    id=req.params.id
+    CreatorEpisodeSchema.findByIdAndDelete(id
+    )
+    .exec()
+    .then((data) => {
+        res.json({
+            status: 200,
+            msg: "deleted successfully",
+            data:data
+        });
+    })
+    .catch((err) => {
+        res.json({
+            status: 500,
+            msg: "Data not deleted",
+            Error: err,
+        });
+    });
+  }
+
+module.exports={CreatorEpisode, multipleUpload,viewEpisode,singleupload,editEpisode,viewEpisodeById,DeleteEpisode}
