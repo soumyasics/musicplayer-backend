@@ -70,5 +70,6 @@ router.post('/subscribePodcast',subscriptionController.subscribePodcast)
 router.post('/viewSubscriptionByListenerId',subscriptionController.getSubscriptionByListenerId)
 router.post('/viewsubscriptions',subscriptionController.Subcsriptions)
 router.post('/listenerreview',listenerreview.listenerReview)
+router.post('/getreviewodpodcast',listenerreview.getreviewodpodcast)
 
 module.exports=router

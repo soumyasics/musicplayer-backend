@@ -10,10 +10,10 @@ const ListenerreviewSchema = mongoose.Schema({
         required: true,
     },
     listenerid: {
-        type: String,
-        required: true,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "listeners",
     },
-    creatorid: {
+    podcastid: {
         type: String,
         required: true,
     }
