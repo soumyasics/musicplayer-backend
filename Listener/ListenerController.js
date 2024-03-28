@@ -150,7 +150,7 @@ const viewListenerById=(req,res)=>{
   ListenerSchema.findById({_id:req.body.id}).exec()
   .then(data=>{
 
-    console.log(data);
+    // console.log(data);
     res.json({
         status:200,
         msg:"Data obtained successfully",
@@ -171,7 +171,7 @@ const viewListenerById=(req,res)=>{
 const deleteListenerById=(req,res)=>{
   ListenerSchema.findByIdAndDelete({_id:req.params.id}).exec()
   .then(data=>{
-    console.log(data);
+    // console.log(data);
     res.json({
         status:200,
         msg:"Data removed successfully",
@@ -190,7 +190,7 @@ const deleteListenerById=(req,res)=>{
 }
 //forgotvPawd Customer by id
 const forgotPwd=(req,res)=>{
-console.log(req.body,'uuu');
+// console.log(req.body,'uuu');
      
   ListenerSchema.findOneAndUpdate({email:req.body.email},{
        password:req.body.password},{conformpassword:req.body.conformpassword
@@ -220,7 +220,7 @@ const getAllPodcast=(req, res)=>{
   CreatorPodcastSchema.find({})
     .then(data=>{
   
-      console.log(data);
+      // console.log(data);
       res.json({
           status:200,
           msg:"Data obtained successfully",
@@ -241,7 +241,7 @@ const addToWishlist = async (req, res)=>{
     listnerId: req.body.listnerId,
     podcastId: req.body.podcastId,
   })
-  console.log(data)
+  // console.log(data)
   if (!data.length > 0) {
     let wishlist = await new WishlistSchema({
       listnerId: req.body.listnerId,

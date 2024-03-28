@@ -1,7 +1,6 @@
 const CreatorPodcastSchema = require("./CreatorPodcastSchema");
 const CreatorEpisode = require("./CreatorEpisodeSchema");
 const multer = require("multer");
-const DemoAudioSchema = require("./DemoAudio/DemoAudioSchema");
 
 const storage = multer.diskStorage({
   destination: function (req, res, cb) {
@@ -15,9 +14,9 @@ const storage = multer.diskStorage({
 const multipleUpload = multer({ storage: storage }).array("files", 2);
 
 const creatorUploadPodcast = async (req, res) => {
-  console.log("test");
-  console.log(req.file);
-  console.log(req.files);
+  // console.log("test");
+  // console.log(req.file);
+  // console.log(req.files);
   let creatorsPodcast = new CreatorPodcastSchema({
     creatorname: req.body.creatorname,
     podcastname: req.body.podcastname,
@@ -46,17 +45,17 @@ const creatorUploadPodcast = async (req, res) => {
         // console.log(err);
         res.json({
           status: 500,
-          msg: "error",
+          msg: "upload failed ",
         });
       }
     });
 };
 
 const viewCreatorPodcastById = (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   CreatorPodcastSchema.findById({ _id: req.body.id })
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       res.json({
         status: 200,
         msg: "Data obtained successfully",
@@ -107,10 +106,9 @@ const editCreatorPodcastById = (req, res) => {
     });
 };
 const getAllPodcastByCreator = (req, res) => {
-  console.log("msncbhdv");
   CreatorPodcastSchema.find({ creatorId: req.body.id })
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       res.json({
         status: 200,
         msg: "Data obtained successfully",
@@ -128,10 +126,9 @@ const getAllPodcastByCreator = (req, res) => {
 };
 
 const getAllPodcast = (req, res) => {
-  console.log("getAllPodcast");
   CreatorPodcastSchema.find()
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       res.json({
         status: 200,
         msg: "Data obtained successfully",
@@ -170,11 +167,11 @@ const getPodcastByPodcastId = (req, res) => {
 };
 
 const getEpisodedOfPodcast = (req, res) => {
-  console.log(req.body.id);
-  console.log("req.body.id");
+  // console.log(req.body.id);
+  // console.log("req.body.id");
   CreatorEpisode.find({ podcastId: req.body.id })
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       res.json({
         status: 200,
         msg: "Data obtained successfully",

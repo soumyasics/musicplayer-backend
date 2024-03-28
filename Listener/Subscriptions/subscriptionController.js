@@ -52,7 +52,7 @@ let SubSchema=require('./subscriptionSchema')
    subscription.findById({_id:req.params.id}).populate('listenerid').populate('creatorid').exec()
    .then(data=>{
  
-     console.log(data);
+    //  console.log(data);
      res.json({
          status:200,
          msg:"Data obtained successfully",
@@ -87,11 +87,10 @@ let SubSchema=require('./subscriptionSchema')
  })
  }
  const viewSubscriptionByCreatorId=(req,res)=>{
-   console.log('msncbhdv');
    subscription.find({creatorId:req.params.id}).populate('listenerid').exec()
    .then(data=>{
  
-     console.log(data);
+    //  console.log(data);
      res.json({
          status:200,
          msg:"Data obtained successfully",
@@ -137,7 +136,7 @@ let SubSchema=require('./subscriptionSchema')
      paymentstatus: req.body.paymentstatus,
    });
 
-   console.log(data, 'ppp',req.body.podcastid, req.body.listenerid)
+  //  console.log(data, 'ppp',req.body.podcastid, req.body.listenerid)
    if (!data.length > 0) {
     subscription = await new SubSchema({
       listenerid:req.body.listenerid,

@@ -146,7 +146,7 @@ const viewCreatorById=(req,res)=>{
   CreatorSchema.findById({_id:req.body.id}).exec()
   .then(data=>{
 
-    console.log(data);
+    // console.log(data);
     res.json({
         status:200,
         msg:"Data obtained successfully",
@@ -167,7 +167,7 @@ const viewCreatorById=(req,res)=>{
 const deleteCreatorById=(req,res)=>{
   CreatorSchema.findByIdAndDelete({_id:req.params.id}).exec()
   .then(data=>{
-    console.log(data);
+    // console.log(data);
     res.json({
         status:200,
         msg:"Data removed successfully",
