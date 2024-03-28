@@ -10,8 +10,8 @@ const storage = multer.diskStorage({
     },
   });
 
-const multipleUpload = multer({ storage: storage }).single("files");
-const singleupload = multer({ dest: 'uploads/' }).single('file')
+const multipleUpload = multer({ storage: storage }).single("file");
+const singleupload = multer().single('file')
 
 const CreatorEpisode=async(req,res)=>{ 
 
@@ -105,14 +105,20 @@ const CreatorEpisode=async(req,res)=>{
 
 
   const editEpisode = (req, res) => {
-    id=req.params.id
-    CreatorEpisodeSchema.findByIdAndUpdate(id,
-        {
-            episodetitle: req.body.episodetitle,
-            episodecount: req.body.episodecount,
-            audio: req.file
-        }
-    )
+    var id=req.params.id
+    var updateObj = {}
+    if (req.body.episodeTitle) {
+      updateObj.episodetitle = req.body.episodeTitle;
+    }
+    if (req.body.episodeCount) {
+      updateObj.episodecount = req.body.episodeCount;
+    }
+    if (req.files) {
+      updateObj.audio = req.a;
+    }
+    console.log(req.file)
+    if (updateObj) {
+      CreatorEpisodeSchema.findByIdAndUpdate(id, updateObj)
     .exec()
     .then((data) => {
         res.json({
@@ -128,6 +134,7 @@ const CreatorEpisode=async(req,res)=>{
             Error: err,
         });
     });
+    }
   }
 
   const DeleteEpisode = (req, res) => {
