@@ -73,7 +73,7 @@ const ListenerLogin = async (req, res) => {
         );
         return res
           .status(200)
-          .json({ message: "Login successful", token, id: listener._id });
+          .json({ message: "Login successful", token, id: listener._id, listenername:listener.firstname});
       } else {
         return res.status(401).json({ message: "Password is incorrect" });
       }

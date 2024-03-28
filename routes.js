@@ -7,7 +7,7 @@ const creatorpodcast=require('./Creator/CreatorPodcastController')
 const admin=require('./Admin/AdminControl')
 const subscriptionController=require('./Listener/Subscriptions/subscriptionController')
 const episode=require('./Creator/CreatorEpisodeController')
-
+const listenerreview=require('./Listener/Review/reviewController')
 //Listeners
 router.post('/listenerLogin',listener.ListenerLogin)
 router.post('/listenerregister',listener.upload,listener.ListenerRegister)
@@ -69,5 +69,6 @@ router.post('/admin_login',admin.adiminLogin)
 router.post('/subscribePodcast',subscriptionController.subscribePodcast)
 router.post('/viewSubscriptionByListenerId',subscriptionController.getSubscriptionByListenerId)
 router.post('/viewsubscriptions',subscriptionController.Subcsriptions)
+router.post('/listenerreview',listenerreview.listenerReview)
 
 module.exports=router
