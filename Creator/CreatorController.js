@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage }).single("file");
 
-const CreatorRegister = (req, res) => { 
+const CreatorRegister = (req, res) => {
   let image = req.file;
   let creators = new CreatorSchema({
     firstname: req.body.firstname,
@@ -39,7 +39,7 @@ const CreatorRegister = (req, res) => {
       res.json({
         status: 200,
         msg: "Succesfully registered",
-        data:response
+        data: response
       });
     })
     .catch((err) => {
@@ -71,8 +71,9 @@ const CreatorLogin = async (req, res) => {
         );
         return res
           .status(200)
-          .json({ message: "Login successful", token, id: creators._id, creatorname: creators.firstname
-});
+          .json({
+            message: "Login successful", token, id: creators._id, creatorname: creators.firstname
+          });
       } else {
         return res.status(401).json({ message: "Password is incorrect" });
       }
@@ -85,36 +86,36 @@ const CreatorLogin = async (req, res) => {
 };
 
 
-  
-const viewCreators=(req,res)=>{
+
+const viewCreators = (req, res) => {
   CreatorSchema.find().exec()
-  .then(data=>{
-    if(data.length>0){
-    res.json({
-        status:200,
-        msg:"Data obtained successfully",
-        data:data
+    .then(data => {
+      if (data.length > 0) {
+        res.json({
+          status: 200,
+          msg: "Data obtained successfully",
+          data: data
+        })
+      } else {
+        res.json({
+          status: 200,
+          msg: "No Data obtained "
+        })
+      }
+    }).catch(err => {
+      res.json({
+        status: 500,
+        msg: "Data not Inserted",
+        Error: err
+      })
     })
-  }else{
-    res.json({
-      status:200,
-      msg:"No Data obtained "
-  })
-  }
-}).catch(err=>{
-    res.json({
-        status:500,
-        msg:"Data not Inserted",
-        Error:err
-    })
-})
 
 }
 
 
-const editCreatorById=(req,res)=>{
-    
-  CreatorSchema.findByIdAndUpdate({_id:req.body.id},{
+const editCreatorById = (req, res) => {
+
+  CreatorSchema.findByIdAndUpdate({ _id: req.body.id }, {
     firstname: req.body.firstname,
     lastname: req.body.lastname,
     email: req.body.email,
@@ -127,90 +128,90 @@ const editCreatorById=(req,res)=>{
     mobile: req.body.mobile,
     country: req.body.country,
     image: req.file,
+  })
+    .exec().then(data => {
+      res.json({
+        status: 200,
+        msg: "Updated successfully"
+      })
+    }).catch(err => {
+      res.json({
+        status: 500,
+        msg: "Data not Updated",
+        Error: err
+      })
     })
-.exec().then(data=>{
-  res.json({
-      status:200,
-      msg:"Updated successfully"
-  })
-}).catch(err=>{
-  res.json({
-      status:500,
-      msg:"Data not Updated",
-      Error:err
-  })
-})
 }
 // view cust by id
-const viewCreatorById=(req,res)=>{
-  CreatorSchema.findById({_id:req.body.id}).exec()
-  .then(data=>{
+const viewCreatorById = (req, res) => {
+  CreatorSchema.findById({ _id: req.body.id }).exec()
+    .then(data => {
 
-    // console.log(data);
-    res.json({
-        status:200,
-        msg:"Data obtained successfully",
-        data:data
+      // console.log(data);
+      res.json({
+        status: 200,
+        msg: "Data obtained successfully",
+        data: data
+      })
+
+    }).catch(err => {
+      console.log(err);
+      res.json({
+        status: 500,
+        msg: "No Data obtained",
+        Error: err
+      })
     })
-  
-}).catch(err=>{
-  console.log(err);
-    res.json({
-        status:500,
-        msg:"No Data obtained",
-        Error:err
-    })
-})
 
 }
 
-const deleteCreatorById=(req,res)=>{
-  CreatorSchema.findByIdAndDelete({_id:req.params.id}).exec()
-  .then(data=>{
-    // console.log(data);
-    res.json({
-        status:200,
-        msg:"Data removed successfully",
-        data:data
+const deleteCreatorById = (req, res) => {
+  CreatorSchema.findByIdAndDelete({ _id: req.params.id }).exec()
+    .then(data => {
+      // console.log(data);
+      res.json({
+        status: 200,
+        msg: "Data removed successfully",
+        data: data
+      })
+
+    }).catch(err => {
+      console.log(err);
+      res.json({
+        status: 500,
+        msg: "No Data obtained",
+        Error: err
+      })
     })
-  
-}).catch(err=>{
-  console.log(err);
-    res.json({
-        status:500,
-        msg:"No Data obtained",
-        Error:err
-    })
-})
 
 }
 //forgotvPawd Customer by id
-const forgotPwdCreator=(req,res)=>{
+const forgotPwdCreator = (req, res) => {
 
-     
-  CreatorSchema.findOneAndUpdate({email:req.body.email},{
-       password:req.body.password
+
+  CreatorSchema.findOneAndUpdate({ email: req.body.email }, {
+    password: req.body.password
+  })
+    .exec().then(data => {
+      if (data != null)
+        res.json({
+          status: 200,
+          msg: "Updated successfully"
+        })
+      else
+        res.json({
+          status: 500,
+          msg: "User Not Found"
+
+        })
+    }).catch(err => {
+      console.log(err);
+      res.json({
+        status: 500,
+        msg: "Data not Updated",
+        Error: err
+      })
     })
-.exec().then(data=>{
-  if(data!=null)
-  res.json({
-      status:200,
-      msg:"Updated successfully"
-  })
-  else
-  res.json({
-    status:500,
-    msg:"User Not Found"
-   
-})
-}).catch(err=>{
-  console.log(err);
-  res.json({
-      status:500,
-      msg:"Data not Updated",
-      Error:err
-  })
-})
 }
 
 const creatorCollection = async (req, res) => {
@@ -223,40 +224,41 @@ const creatorCollection = async (req, res) => {
   }
 };
 
-const getSubscriptions=(req,res)=>{  
+const getSubscriptions = (req, res) => {
   var result = [];
   var temp;
   subscriptionSchema.find()
-  .populate('listenerid')
-  .populate('podcastid')
-.exec().then(data=>{
-  if(data!=null) {
-    for (var i in data) {
-      temp = data[i].podcastid.creatorId.toString();
-      if (temp === req.body.id) {
-        result.push(data[i]);
+    .populate('listenerid')
+    .populate('podcastid')
+    .exec().then(data => {
+      if (data != null) {
+        for (var i in data) {
+          temp = data[i].podcastid ?
+            data[i].podcastid.creatorId.toString() : ''
+          if (temp === req.body.id) {
+            result.push(data[i]);
+          }
+        }
+        res.json({
+          status: 200,
+          data: result
+        })
       }
-    }
-    res.json({
-      status:200,
-      data:result
-  })
-  }
-  else {
-    res.json({
-      status:500,
-      msg:"No subscriptions Found"
-     
-  })
-}
-}).catch(err=>{
-  console.log(err);
-  res.json({
-      status:500,
-      msg:"Data not Updated",
-      Error:err
-  })
-})
+      else {
+        res.json({
+          status: 500,
+          msg: "No subscriptions Found"
+
+        })
+      }
+    }).catch(err => {
+      console.log(err);
+      res.json({
+        status: 500,
+        msg: "Data not Updated",
+        Error: err
+      })
+    })
 }
 
 
@@ -269,6 +271,6 @@ module.exports = {
   editCreatorById,
   viewCreatorById,
   forgotPwdCreator,
-  viewCreators,creatorCollection,
+  viewCreators, creatorCollection,
   getSubscriptions
 };

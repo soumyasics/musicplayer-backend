@@ -10,6 +10,8 @@ const listenerReview = (req, res) => {
         listenername: req.body.listenername,
         listenerid: req.body.listenerid,
         podcastid: req.body.podcastid,
+        creatorid: req.body.creatorid,
+        podcastname: req.body.podcastname,
       });
       Reviews
         .save()
@@ -47,4 +49,16 @@ const listenerReview = (req, res) => {
         data:data
       });
       };
-module.exports={listenerReview, getreviewodpodcast}
+
+      const getCreatorReview = async (req, res) => {
+        console.log(req.body.id);
+        //  console.log(req.file);
+        var data = await  ListenerreviewSchema.find({
+          creatorid: req.body.id,
+        })
+        res.json({
+          status: 200,
+          data:data
+        });
+        };
+module.exports={listenerReview, getreviewodpodcast,getCreatorReview}

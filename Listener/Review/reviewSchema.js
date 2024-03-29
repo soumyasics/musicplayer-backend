@@ -17,5 +17,14 @@ const ListenerreviewSchema = mongoose.Schema({
         type: String,
         required: true,
     }
+    ,
+    creatorid: {
+        type: String,
+        required: true,
+    },
+    podcastname: {
+        type: String,
+        required: true,
+    }
 });
 module.exports = mongoose.model("listenersreview", ListenerreviewSchema);
