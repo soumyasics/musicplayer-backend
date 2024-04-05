@@ -8,6 +8,8 @@ const admin=require('./Admin/AdminControl')
 const subscriptionController=require('./Listener/Subscriptions/subscriptionController')
 const episode=require('./Creator/CreatorEpisodeController')
 const listenerreview=require('./Listener/Review/reviewController')
+
+const songs=require('./Admin/AdminAddMusicController')
 //Listeners
 router.post('/listenerLogin',listener.ListenerLogin)
 router.post('/listenerregister',listener.upload,listener.ListenerRegister)
@@ -73,5 +75,10 @@ router.post('/listenerreview',listenerreview.listenerReview)
 router.post('/getreviewodpodcast',listenerreview.getreviewodpodcast)
 router.post('/getReviewaById',listenerreview.getCreatorReview)
 
+
+// add song
+router.post('/addamusic',songs.multipleUpload, songs.AddAMusic)
+router.post('/viewallmusic',songs.multipleUpload, songs.viewAllMusic)
+router.post('/removeamusic/:musicid', songs.DeleteASong)
 
 module.exports=router

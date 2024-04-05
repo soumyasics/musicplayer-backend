@@ -16,9 +16,9 @@ app.use(bodyParser.json())
 app.use(cors())
 
 const route=require('./routes')
-app.use('/educational_podcasting_api',route)
+app.use('/music_player_api',route)
 
-const PORT = 4008;
+const PORT = 4013;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
