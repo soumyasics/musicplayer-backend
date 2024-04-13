@@ -5,6 +5,8 @@ const multer = require("multer");
 const jwt = require("jsonwebtoken");
 const  CreatorPodcastSchema = require("../Creator/CreatorPodcastSchema");
 const  WishlistSchema = require("./WishlistSchema");
+let SubSchema=require('../Listener/Subscriptions/subscriptionSchema')
+
 const storage = multer.diskStorage({
   destination: function (req, res, cb) {
     cb(null, "./upload");
@@ -216,24 +218,57 @@ const forgotPwd=(req,res)=>{
   })
 })
 }
-const getAllPodcast=(req, res)=>{
+// const getAllPodcast=(req, res)=>{
+
+const getAllPodcast= async (req, res)=>{
+
+  var response =[];
+  var data = await CreatorPodcastSchema.find({});
+
+  if (data) {
+
+    for(var i in data) {
+      var subscription = await  SubSchema.find({
+        listenerid:req.body.lisnterId,
+         podcastid: data[i]._id,
+         paymentstatus: true,
+      })
+      if (subscription.length <= 0) {
+        response.push(data[i])
+      }
+    }
+
+    res.json({
+      status:200,
+      msg:"Data obtained successfully",
+      data:response
+    })
+  } else {
+    res.json({
+      status:500,
+      msg:"No Data obtained",
+      Error:err
+    })
+  }
+
+
   CreatorPodcastSchema.find({})
     .then(data=>{
   
       // console.log(data);
-      res.json({
-          status:200,
-          msg:"Data obtained successfully",
-          data:data
-      })
-    
+      // res.json({
+      //     status:200,
+      //     msg:"Data obtained successfully",
+      //     data:data
+      // })
+      var count = 0;
   }).catch(err=>{
     console.log(err);
-      res.json({
-          status:500,
-          msg:"No Data obtained",
-          Error:err
-      })
+      // res.json({
+      //     status:500,
+      //     msg:"No Data obtained",
+      //     Error:err
+      // })
   })
 }
 const addToWishlist = async (req, res)=>{
